@@ -1,13 +1,18 @@
-import React from 'react';
-import PaymentContainer from 'components/Payment/PaymentContainer';
+import React, {Component} from 'react';
+import {browserHistory} from 'react-router';
+import {connect} from 'react-redux';
 import './app.css';
+import PaymentContainer from "components/Payment/PaymentContainer";
 
-class AppComponent extends React.Component {
+class AppComponent extends Component {
+  componentWillMount() {
+  }
 
   render() {
+    console.log(this.props);
     return (
       <div>
-        <PaymentContainer />
+        {this.props.children}
       </div>
     );
   }
@@ -15,4 +20,4 @@ class AppComponent extends React.Component {
 
 AppComponent.defaultProps = {};
 
-export default AppComponent;
+export default connect(null)(AppComponent);

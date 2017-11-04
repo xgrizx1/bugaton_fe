@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {browserHistory} from 'react-router';
 
 const PaymentSection = ({color, planName, planList, price}) =>
   <div className="col-xs-12 col-sm-6 col-md-3">
@@ -15,7 +16,7 @@ const PaymentSection = ({color, planName, planList, price}) =>
         <span>per month</span>
       </li>
       <li>
-        <button>Join Now</button>
+        <button onClick={() => browserHistory.push('/dashboard')}>Join Now</button>
       </li>
     </ul>
   </div>;

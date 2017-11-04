@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 import {Provider} from 'react-redux';
 import {Router, Route, browserHistory} from 'react-router';
-import App from './containers/App';
+import PaymentContainer from 'components/Payment/PaymentContainer';
+import DashboardContainer from 'components/Dashboard/DashboardContainer';
+import App from './components/App';
 import configureStore from './stores';
-
 
 const store = configureStore();
 
@@ -18,7 +19,10 @@ ReactDOM.render(
           window.scrollTo(0, 0);
         }}
       >
-        <Route name="app" path="/" component={App}/>
+        <Route path="/" component={App}>
+          <Route path="/payment" component={PaymentContainer}/>
+          <Route path="/dashboard" component={DashboardContainer}/>
+        </Route>
       </Router>
     </Provider>
   </AppContainer>,

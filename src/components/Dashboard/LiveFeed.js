@@ -20,12 +20,19 @@ class OverallFeel extends React.Component {
       counter: 7,
       width: 600
     };
+    this.onIntervalSetting = this.onIntervalSetting.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      this.setState({width: document.getElementById('live-feed').clientWidth});
-    });
+    window.addEventListener('resize', this.onIntervalSetting);
+    this.setState({width: document.getElementById('live-feed').clientWidth});
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onIntervalSetting);
+  }
+
+  onIntervalSetting() {
     this.setState({width: document.getElementById('live-feed').clientWidth});
     setInterval(() => {
       let dataSlice = [];

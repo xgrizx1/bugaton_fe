@@ -5,9 +5,10 @@ import {Provider} from 'react-redux';
 import {Router, Route, browserHistory} from 'react-router';
 import PaymentContainer from 'components/Payment/PaymentContainer';
 import DashboardContainer from 'components/Dashboard/DashboardContainer';
-import App from './components/App';
+import DashboardEntry from 'components/Dashboard/DashboardEntry';
+import Duck from 'components/Duck/Duck';
 import configureStore from './stores';
-import DashboardEntry from "components/Dashboard/DashboardEntry";
+import App from './components/App';
 
 const store = configureStore();
 
@@ -24,6 +25,7 @@ ReactDOM.render(
           <Route path="/payment" component={PaymentContainer}/>
           <Route component={DashboardEntry}>
             <Route path="/dashboard" component={DashboardContainer}/>
+            <Route path="/duck/:id" component={Duck}/>
           </Route>
         </Route>
       </Router>

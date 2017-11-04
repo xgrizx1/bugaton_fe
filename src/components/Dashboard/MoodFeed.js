@@ -46,6 +46,10 @@ class MoodFeed extends React.PureComponent {
     this.setState({width: document.getElementById('mood-panel').clientWidth});
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', () => {});
+  }
+
   render() {
     return (
       <CustomPanel title={'Feel Last Week'}>

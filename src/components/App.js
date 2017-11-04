@@ -12,9 +12,11 @@ const muiTheme = getMuiTheme({});
 class AppComponent extends Component {
   componentWillMount() {
     injectTapEventPlugin();
+    /*
     const currentRoute = this.props.routes[this.props.routes.length - 1];
     if (currentRoute.path === "/dashboard") return;
     browserHistory.push('/payment');
+    */
   }
 
   render() {

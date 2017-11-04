@@ -7,6 +7,7 @@ import PaymentContainer from 'components/Payment/PaymentContainer';
 import DashboardContainer from 'components/Dashboard/DashboardContainer';
 import App from './components/App';
 import configureStore from './stores';
+import DashboardEntry from "components/Dashboard/DashboardEntry";
 
 const store = configureStore();
 
@@ -21,7 +22,9 @@ ReactDOM.render(
       >
         <Route path="/" component={App}>
           <Route path="/payment" component={PaymentContainer}/>
-          <Route path="/dashboard" component={DashboardContainer}/>
+          <Route component={DashboardEntry}>
+            <Route path="/dashboard" component={DashboardContainer}/>
+          </Route>
         </Route>
       </Router>
     </Provider>

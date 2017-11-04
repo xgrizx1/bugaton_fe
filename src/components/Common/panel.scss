@@ -1,0 +1,30 @@
+.panel {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 3px;
+  width: 100%;
+}
+
+.panel-heading {
+  box-shadow: 0 1px rgba(255, 255, 255, 0.1);
+  height: 60px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px;
+}
+
+.panel-heading-blue {
+  @extend .panel-heading;
+  background-color: #03A9F4;
+}
+
+.panel-heading-green {
+  @extend .panel-heading;
+  background-color: #5ACFE7;
+}
+
+.panel-body {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: scroll;
+}

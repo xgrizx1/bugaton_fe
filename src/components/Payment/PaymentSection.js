@@ -9,7 +9,7 @@ const PaymentSection = ({color, planName, planList, price}) =>
         <h1>{planName}</h1>
       </li>
       {planList.map(
-        plan => <li>{plan}</li>
+        (plan, i) => <li key={i}>{plan}</li>
       )}
       <li>
         <h3>${price}</h3>

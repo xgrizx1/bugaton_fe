@@ -1,0 +1,53 @@
+@import '../../styles/theme.scss';
+
+.main-header {
+  box-shadow: 0 2px 5px rgba(0,0,0,.26);
+  height: 60px;
+  color: white;
+  background-color: $dark-blue;
+  width: 100%;
+  position: relative;
+}
+
+.main-header-flex{
+  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.header-flex{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  .material-icons {
+    font-size: 24px;
+    padding-right: 15px;
+  }
+  .material-icons:hover {
+    cursor: pointer;
+  }
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.header-page {
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.duck-container{
+  padding: 50px;
+}
+

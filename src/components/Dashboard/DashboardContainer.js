@@ -55,7 +55,7 @@ class DashboardContainer extends React.Component {
                       <div>
                         Based on current feed
                         <strong> Ivan Dejkovic</strong> is probably feeling bad today
-                      </div>
+                     
                     }
                   />
                 </div>

@@ -69,6 +69,22 @@ class Duck extends React.Component {
       if (transformTimeSeconds(child.key) < 50)
         this.handleHumidityChange(child);
     });
+
+    this.setState({
+      noise,
+      light,
+      temperature,
+      humidity,
+      motion
+    });
+  }
+
+  componentWillUnmount() {
+    this.state.noise.off();
+    this.state.temperature.off();
+    this.state.light.off();
+    this.state.motion.off();
+    this.state.humidity.off();
   }
 
   prepareEventsForRender(events) {

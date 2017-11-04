@@ -7,6 +7,7 @@ import PaymentContainer from 'components/Payment/PaymentContainer';
 import DashboardContainer from 'components/Dashboard/DashboardContainer';
 import DashboardEntry from 'components/Dashboard/DashboardEntry';
 import Duck from 'components/Duck/Duck';
+import Employee from "components/Employee/Employee";
 import Error from 'components/ErrorPage/Error';
 import configureStore from './stores';
 import App from './components/App';
@@ -28,6 +29,7 @@ ReactDOM.render(
           <Route component={DashboardEntry}>
             <Route path="/dashboard" component={DashboardContainer}/>
             <Route path="/duck/:id" component={Duck}/>
+            <Route path="/employees" component={Employee} />
           </Route>
           <Route path="*" component={Error} />
         </Route>

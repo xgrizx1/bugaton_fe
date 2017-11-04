@@ -2,8 +2,6 @@ import React from 'react';
 import Header from 'components/Header/Header';
 import PropTypes from 'prop-types';
 import Sidebar from 'components/Sidebar/Sidebar';
-import firebase from '../../config/database';
-
 
 class DashboardEntry extends React.Component {
   constructor(props, context) {

@@ -2,9 +2,9 @@ import React from 'react';
 import CustomPanel from 'components/Common/Panel';
 import PropTypes from 'prop-types';
 import MoodFeed from 'components/Dashboard/MoodFeed';
-import './dashboard.scss';
 import LiveFeed from 'components/Dashboard/LiveFeed';
 import Flag from 'components/Common/Flag';
+import './dashboard.scss';
 
 const Section = ({sectionName}) => (
   <div className="dashboard-section">

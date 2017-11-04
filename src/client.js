@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 import {Provider} from 'react-redux';
-import {Router, Route, browserHistory} from 'react-router';
+import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import PaymentContainer from 'components/Payment/PaymentContainer';
 import DashboardContainer from 'components/Dashboard/DashboardContainer';
 import DashboardEntry from 'components/Dashboard/DashboardEntry';
@@ -23,6 +23,7 @@ ReactDOM.render(
         }}
       >
         <Route path="/" component={App}>
+          <IndexRoute component={PaymentContainer} />
           <Route path="/payment" component={PaymentContainer}/>
           <Route component={DashboardEntry}>
             <Route path="/dashboard" component={DashboardContainer}/>

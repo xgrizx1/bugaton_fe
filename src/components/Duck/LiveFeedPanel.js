@@ -3,7 +3,7 @@ import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
 import CustomPanel from '../Common/Panel';
 import PropTypes from 'prop-types';
 
-class Noise extends React.Component {
+class LiveFeedPanel extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -35,7 +35,6 @@ class Noise extends React.Component {
   }
 
   render() {
-    console.log(this.props.data);
     return (
       <CustomPanel title={this.props.dataKey.toUpperCase()}>
         <div id={`${this.props.dataKey}-panel`}>
@@ -56,8 +55,8 @@ class Noise extends React.Component {
   }
 };
 
-Noise.propTypes = {
+LiveFeedPanel.propTypes = {
   dataKey: PropTypes.string
 };
 
-export default Noise;
+export default LiveFeedPanel;

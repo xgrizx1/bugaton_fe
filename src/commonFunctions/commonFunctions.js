@@ -1,6 +1,7 @@
 import moment from 'moment';
 
-export function transformTimeSeconds (date) {
-  const now = moment(new Date());
-  return moment.duration(now.diff(date));
+export function transformTimeSeconds(date) {
+  const now = moment().unix(); //todays date
+  const end = date / 1000;
+  return (now-end);
 }

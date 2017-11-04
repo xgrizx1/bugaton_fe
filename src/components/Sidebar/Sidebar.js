@@ -37,7 +37,7 @@ class Sidebar extends React.Component {
           style={{minWidth: '200px'}}
           primaryText={ducks[i]}
           key={i}
-          onClick={() => browserHistory.push(`duck/${i}`)}
+          onClick={() => browserHistory.push(`/duck/${i}`)}
         />
       );
     }

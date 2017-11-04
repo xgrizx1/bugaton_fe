@@ -11,31 +11,131 @@ class Duck extends React.Component {
       temperatureEvents: [],
       humidityEvents: [],
       motionEvents: [],
-      lightEvents: []
+      lightEvents: [],
     };
 
     this.handleNoiseChange = this.handleNoiseChange.bind(this);
+    this.handleMotionChange = this.handleMotionChange.bind(this);
+    this.handleLightChange = this.handleLightChange.bind(this);
+    this.handleTemperatureChange = this.handleTemperatureChange.bind(this);
+    this.handleHumidityChange = this.handleHumidityChange.bind(this);
+    this.prepareEventsForRender = this.prepareEventsForRender.bind(this);
   }
 
+
   componentWillMount() {
-    const duckEvent = firebase
+    const duckName = `duck${this.props.params.id}`;
+    const noise = firebase
       .database()
-      .ref(`duck_events/noise_events/duck${this.props.params.id}`)
+      .ref(`duck_events/noise_events/${duckName}`)
       .orderByKey();
-    duckEvent.on('child_added', child => {
-      this.handleNoiseChange(child);
+    noise.on('child_added', child => {
+      if (transformTimeSeconds(child.key) < 50)
+        this.handleNoiseChange(child);
     });
+
+    const temperature = firebase
+      .database()
+      .ref(`duck_events/temperature_events/${duckName}`)
+      .orderByKey();
+    temperature.on('child_added', child => {
+      if (transformTimeSeconds(child.key) < 50)
+        this.handleTemperatureChange(child);
+    });
+
+    const motion = firebase
+      .database()
+      .ref(`duck_events/motion_events/${duckName}`)
+      .orderByKey();
+    motion.on('child_added', child => {
+      if (transformTimeSeconds(child.key) < 50)
+        this.handleMotionChange(child);
+    });
+
+    const light = firebase
+      .database()
+      .ref(`duck_events/light_events/${duckName}`)
+      .orderByKey();
+    light.on('child_added', child => {
+      if (transformTimeSeconds(child.key) < 50)
+        this.handleLightChange(child);
+    });
+
+    const humidity = firebase
+      .database()
+      .ref(`duck_events/humidity_events/${duckName}`)
+      .orderByKey();
+    humidity.on('child_added', child => {
+      if (transformTimeSeconds(child.key) < 50)
+        this.handleHumidityChange(child);
+    });
+  }
+
+  prepareEventsForRender(events) {
+    const arr = [...events];
+    return arr.length > 20 ? arr.slice(10, (events.length - 1)) : arr;
   }
 
   handleNoiseChange(child) {
-    debugger;
     this.setState({
       noiseEvents: [
-        ...this.state.noiseEvents,
-        {name: child.key, noise: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0}
-      ]
+        ...this.prepareEventsForRender(this.state.noiseEvents),
+        {
+          name: child.key,
+          noise: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
+        },
+      ],
     });
-    console.log(this.state.noiseEvents);
+  }
+
+  handleTemperatureChange(child) {
+    this.setState({
+      temperatureEvents: [
+        ...this.prepareEventsForRender(this.state.temperatureEvents),
+        {
+          name: child.key,
+          temperature: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
+        },
+      ],
+    });
+  }
+
+  handleMotionChange(child) {
+    this.setState({
+      motionEvents: [
+        ...this.prepareEventsForRender(this.state.motionEvents),
+        {
+          name: child.key,
+          motion: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
+        },
+      ],
+    });
+  }
+
+  handleLightChange(child) {
+    this.setState({
+      lightEvents: [
+        ...this.prepareEventsForRender(this.state.lightEvents),
+        {
+          name: child.key,
+          light: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
+        },
+      ],
+    });
+
+  }
+
+  handleHumidityChange(child) {
+    this.setState({
+      humidityEvents: [
+        ...this.prepareEventsForRender(this.state.humidityEvents),
+
+        {
+          name: child.key,
+          humidity: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
+        },
+      ],
+    });
   }
 
   render() {
@@ -43,34 +143,19 @@ class Duck extends React.Component {
       <div className="duck-container">
         <div className="row">
           <div className="col-lg-6">
-            <LiveFeedPanel
-              data={this.state.noiseEvents}
-              dataKey={'noise'}
-            />
+            <LiveFeedPanel data={this.state.noiseEvents} dataKey={'noise'}/>
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel
-              data={this.state.temperatureEvents}
-              dataKey={'temperature'}
-            />
+            <LiveFeedPanel data={this.state.temperatureEvents} dataKey={'temperature'}/>
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel
-              data={this.state.humidityEvents}
-              dataKey={'humidity'}
-            />
+            <LiveFeedPanel data={this.state.humidityEvents} dataKey={'humidity'}/>
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel
-              data={this.state.motionEvents}
-              dataKey={'motion'}
-            />
+            <LiveFeedPanel data={this.state.motionEvents} dataKey={'motion'}/>
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel
-              data={this.state.lightEvents}
-              dataKey={'light'}
-            />
+            <LiveFeedPanel data={this.state.lightEvents} dataKey={'light'}/>
           </div>
         </div>
       </div>

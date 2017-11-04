@@ -6,9 +6,9 @@ import './payment.scss';
 class PaymentContainer extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{background: '#F2F2F2'}}>
         <section className="container">
-          <h1>Pricing</h1>
+          <h1>Pricing Overview</h1>
           <div className="row white">
             <div className="block">
               <PaymentSection planName={'Basic'} color={'green'}/>

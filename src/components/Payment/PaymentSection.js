@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const PaymentSection = ({color, planName, planList, price}) =>
   <div className="col-xs-12 col-sm-6 col-md-3">
-    <ul className={`pricing p-${color}`}>
+    <ul className={`pricing p-${color}`} style={{backgroundColor: 'white'}}>
       <li className={`pricing-header-${color}`}>
         <h1>{planName}</h1>
       </li>

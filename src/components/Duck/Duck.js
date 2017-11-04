@@ -2,6 +2,7 @@ import React from 'react';
 import firebase from '../../config/database';
 import LiveFeedPanel from './LiveFeedPanel';
 import {transformTimeSeconds} from '../../commonFunctions/commonFunctions';
+import moment from 'moment';
 
 class Duck extends React.Component {
   constructor() {
@@ -93,11 +94,12 @@ class Duck extends React.Component {
   }
 
   handleNoiseChange(child) {
+    console.log(moment(Math.round(child.key)));
     this.setState({
       noiseEvents: [
         ...this.prepareEventsForRender(this.state.noiseEvents),
         {
-          name: child.key,
+          name: moment(Math.round(child.key)).format('hh:mm:ss a'),
           noise: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
         },
       ],
@@ -109,7 +111,7 @@ class Duck extends React.Component {
       temperatureEvents: [
         ...this.prepareEventsForRender(this.state.temperatureEvents),
         {
-          name: child.key,
+          name: moment(Math.round(child.key)).format('hh:mm:ss a'),
           temperature: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
         },
       ],
@@ -121,7 +123,7 @@ class Duck extends React.Component {
       motionEvents: [
         ...this.prepareEventsForRender(this.state.motionEvents),
         {
-          name: child.key,
+          name: moment(Math.round(child.key)).format('hh:mm:ss a'),
           motion: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
         },
       ],
@@ -133,7 +135,7 @@ class Duck extends React.Component {
       lightEvents: [
         ...this.prepareEventsForRender(this.state.lightEvents),
         {
-          name: child.key,
+          name: moment(Math.round(child.key)).format('hh:mm:ss a'),
           light: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
         },
       ],
@@ -147,7 +149,7 @@ class Duck extends React.Component {
         ...this.prepareEventsForRender(this.state.humidityEvents),
 
         {
-          name: child.key,
+          name: moment(Math.round(child.key)).format('hh:mm:ss a'),
           humidity: child.node_.value_ !== undefined ? parseInt(child.node_.value_) : 0,
         },
       ],

@@ -1,15 +1,15 @@
 import React from 'react';
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
+import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
 import CustomPanel from '../Common/Panel';
 
 const data = [
-  { name: 'Day 1', mood: 4000},
-  { name: 'Day 2', mood: 3000},
-  { name: 'Day 3', mood: 2000},
-  { name: 'Day 4', mood: 2780},
-  { name: 'Day 5', mood: 1890},
-  { name: 'Day 6', mood: 2390},
-  { name: 'Day 7', mood: 3490},
+  {name: 'Day 1', noise: 40, temperature: 22},
+  {name: 'Day 2', noise: 30, temperature: 22},
+  {name: 'Day 3', noise: 20, temperature: 22},
+  {name: 'Day 4', noise: 27, temperature: 22},
+  {name: 'Day 5', noise: 18, temperature: 23},
+  {name: 'Day 6', noise: 23, temperature: 23},
+  {name: 'Day 7', noise: 34, temperature: 23},
 ];
 
 class OverallFeel extends React.Component {
@@ -18,10 +18,15 @@ class OverallFeel extends React.Component {
     this.state = {
       data,
       counter: 7,
+      width: 600
     };
   }
 
   componentDidMount() {
+    window.addEventListener('resize', () => {
+      this.setState({width: document.getElementById('live-feed').clientWidth});
+    });
+    this.setState({width: document.getElementById('live-feed').clientWidth});
     setInterval(() => {
       let dataSlice = [];
       if (this.state.data.length > 12) {
@@ -32,27 +37,30 @@ class OverallFeel extends React.Component {
       this.setState({
         data: [
           ...dataSlice,
-          { name: `Day ${this.state.counter + 1}`, mood: Math.random() * 4000, amt: Math.random() * 30 + 2000 },
+          {name: `Day ${this.state.counter + 1}`, noise: Math.random() * 40, temperature: Math.random() * 3 + 22},
         ],
         counter: this.state.counter + 1,
       });
-    }, 4000);
+    }, 2000);
   }
 
   render() {
     return (
       <CustomPanel title={'Feel'}>
-        <LineChart
-          width={600}
-          height={330}
-          data={this.state.data}
-          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-        >
-          <XAxis dataKey="name" />
-          <Tooltip />
-          <CartesianGrid stroke="#e5e5e5" />
-          <Line type="monotone" dataKey="mood" stroke="#193852" yAxisId={0} />
-        </LineChart>
+        <div id="live-feed">
+          <LineChart
+            width={this.state.width}
+            height={330}
+            data={this.state.data}
+            margin={{top: 5, right: 20, left: 10, bottom: 5}}
+          >
+            <XAxis dataKey="name"/>
+            <Tooltip/>
+            <CartesianGrid stroke="#e5e5e5"/>
+            <Line type="monotone" dataKey="noise" stroke="#193852" yAxisId={0}/>
+            <Line type="monotone" dataKey="temperature" stroke="#452123" yAxisId={0}/>
+          </LineChart>
+        </div>
       </CustomPanel>
     );
   }

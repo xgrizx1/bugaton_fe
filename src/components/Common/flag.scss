@@ -1,0 +1,40 @@
+@import '../../styles/theme';
+
+.flag-container {
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 6px, rgba(0, 0, 0, 0.12) 0 1px 4px;
+  width: 100%;
+  height: 65px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 30px 10px 20px;
+}
+
+.flag-container:hover {
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 10px, rgba(0, 0, 0, 0.12) 0 4px 10px;
+  cursor: pointer;
+}
+
+.flag-container-danger {
+  @extend .flag-container;
+  background: #EF9A9A
+;
+}
+
+.flag-container-success {
+  @extend .flag-container;
+  background: #80CBC4;
+}
+
+.flag-container-warning {
+  @extend .flag-container;
+  background: $yel;
+}
+
+
+.flag-title {
+  font-size: 16px;
+  color: white;
+}

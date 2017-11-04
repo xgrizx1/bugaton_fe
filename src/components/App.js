@@ -1,23 +1,18 @@
 import React from 'react';
-import YeomanImage from './YeomanImage';
+import PaymentContainer from 'components/Payment/PaymentContainer';
 import './app.css';
 
 class AppComponent extends React.Component {
 
   render() {
     return (
-      <div className="index">
-        <YeomanImage />
-        <h1>DEMO PAGE </h1>
-        <div className="notice">
-          Please edit <code>src/components/App.js</code> to get started!
-        </div>
+      <div>
+        <PaymentContainer />
       </div>
     );
   }
 }
 
-AppComponent.defaultProps = {
-};
+AppComponent.defaultProps = {};
 
 export default AppComponent;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
 import CustomPanel from '../Common/Panel';
-
+import PropTypes from 'prop-types';
 
 class Noise extends React.Component {
   constructor() {
@@ -15,6 +15,9 @@ class Noise extends React.Component {
 
   componentWillMount() {
     window.addEventListener('resize', this.onResize);
+  }
+
+  componentDidMount(){
     this.onResize();
   }
 
@@ -23,7 +26,7 @@ class Noise extends React.Component {
   }
 
   onResize() {
-    const resizeable = document.getElementById('noise-panel');
+    const resizeable = document.getElementById(`${this.props.dataKey}-panel`);
     let toResize = 0;
     if (resizeable !== null) {
       toResize = resizeable.clientWidth;
@@ -34,8 +37,8 @@ class Noise extends React.Component {
   render() {
     console.log(this.props.data);
     return (
-      <CustomPanel title={'Noise'}>
-        <div id="noise-panel">
+      <CustomPanel title={this.props.dataKey.toUpperCase()}>
+        <div id={`${this.props.dataKey}-panel`}>
           <LineChart
             width={this.state.width}
             height={330}
@@ -45,12 +48,16 @@ class Noise extends React.Component {
             <XAxis dataKey="name"/>
             <Tooltip/>
             <CartesianGrid stroke="#e5e5e5"/>
-            <Line type="monotone" dataKey="noise" stroke="#193852" yAxisId={0}/>
+            <Line type="monotone" dataKey={this.props.dataKey} stroke="#193852" yAxisId={0}/>
           </LineChart>
         </div>
       </CustomPanel>
     );
   }
+};
+
+Noise.propTypes = {
+  dataKey: PropTypes.string
 };
 
 export default Noise;

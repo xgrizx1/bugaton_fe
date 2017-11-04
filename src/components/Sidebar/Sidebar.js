@@ -50,8 +50,8 @@ class Sidebar extends React.Component {
     return (
       <Drawer docked={false} width={300} open={isOpen} onRequestChange={onRequestChange}>
         <SidebarHeader/>
-        <MenuItem onClick={handleMenuClick}>Dashboard</MenuItem>
-        <MenuItem onClick={handleMenuClick}>Employees</MenuItem>
+        <MenuItem onClick={() => browserHistory.push('/dashboard')}>Dashboard</MenuItem>
+        <MenuItem onClick={() => browserHistory.push('/employees')}>Employees</MenuItem>
         <MenuItem
           menuItems={this.prepareDucks()}
         >

@@ -1,15 +1,17 @@
 import React from 'react';
 import firebase from '../../config/database';
-import Noise from './Noise';
+import LiveFeedPanel from './LiveFeedPanel';
 import {transformTimeSeconds} from '../../commonFunctions/commonFunctions';
 
 class Duck extends React.Component {
   constructor() {
     super();
     this.state = {
-      noiseEvents: [
-        {name: "20 seconds ago", noise: '10'}
-      ],
+      noiseEvents: [],
+      temperatureEvents: [],
+      humidityEvents: [],
+      motionEvents: [],
+      lightEvents: []
     };
 
     this.handleNoiseChange = this.handleNoiseChange.bind(this);
@@ -39,10 +41,36 @@ class Duck extends React.Component {
   render() {
     return (
       <div className="duck-container">
-        <h1>Duck </h1>
         <div className="row">
-          <div className="col-xs-12">
-            <Noise data={this.state.noiseEvents}/>
+          <div className="col-lg-6">
+            <LiveFeedPanel
+              data={this.state.noiseEvents}
+              dataKey={'noise'}
+            />
+          </div>
+          <div className="col-lg-6">
+            <LiveFeedPanel
+              data={this.state.temperatureEvents}
+              dataKey={'temperature'}
+            />
+          </div>
+          <div className="col-lg-6">
+            <LiveFeedPanel
+              data={this.state.humidityEvents}
+              dataKey={'humidity'}
+            />
+          </div>
+          <div className="col-lg-6">
+            <LiveFeedPanel
+              data={this.state.motionEvents}
+              dataKey={'motion'}
+            />
+          </div>
+          <div className="col-lg-6">
+            <LiveFeedPanel
+              data={this.state.lightEvents}
+              dataKey={'light'}
+            />
           </div>
         </div>
       </div>

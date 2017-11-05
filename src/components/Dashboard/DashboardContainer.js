@@ -60,6 +60,21 @@ class DashboardContainer extends React.Component {
       });
     });
 
+    gitEvent.on('child_changed', (child) => {
+      const value = child.val();
+      console.log(value);
+      let arr = [];
+      Object.keys(value).forEach(
+        i => arr.push({name: child.key, ...value[i]})
+      );
+      this.setState({
+        gitStates: [
+          ...this.state.gitStates,
+          ...arr
+        ]
+      });
+    });
+
     this.setState({gitEvent});
 
     getRequest('getProjects/').then(response => {

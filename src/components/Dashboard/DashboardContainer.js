@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import MoodFeed from 'components/Dashboard/MoodFeed';
 import LiveFeed from 'components/Dashboard/LiveFeed';
 import Flag from 'components/Common/Flag';
-import Work from 'material-ui/svg-icons/action/work';
 import {browserHistory} from 'react-router';
 import './dashboard.scss';
 

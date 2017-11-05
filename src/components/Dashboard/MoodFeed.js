@@ -1,20 +1,13 @@
 import React from 'react';
 import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
 import ReactDOM from 'react-dom';
+import {getRequest} from 'request';
 import CustomPanel from '../Common/Panel';
 
-const data = [
-  {name: '1.11', mood: 4},
-  {name: '2.11', mood: 10},
-  {name: '3.11', mood: 2},
-  {name: '4.11', mood: 7},
-  {name: '5.11', mood: 3},
-];
-
-const CustomizedDot = (props) => {
+const CustomizedDot = props => {
   const {cx, cy, stroke, payload, value} = props;
 
-  if (value > 5) {
+  if (value > 2) {
     return (
       <svg x={cx - 10} y={cy - 10} width={20} height={20} fill="#88D8CA" viewBox="0 0 1024 1024">
         <path
@@ -31,15 +24,37 @@ const CustomizedDot = (props) => {
   );
 };
 
+const Days = {
+  0: 'Monday',
+  1: 'Tuesday',
+  2: 'Wednesday',
+  3: 'Thursday',
+  4: 'Friday',
+};
+
 class MoodFeed extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      width: 600
+      width: 600,
+      data: [],
     };
   }
 
   componentDidMount() {
+    getRequest('getAverageMoodsWeekly')
+      .then(response => {
+        const resp = response.data;
+        let arr = [];
+        Object.keys(resp).forEach(function (key) {
+          if (key < 5)
+            arr.push({name: Days[key], mood: resp[key]});
+        });
+        this.setState({data: arr});
+      })
+      .catch(() => {
+      });
+
     window.addEventListener('resize', () => {
       this.setState({width: document.getElementById('mood-panel').clientWidth});
     });
@@ -47,18 +62,19 @@ class MoodFeed extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', () => {});
+    window.removeEventListener('resize', () => {
+    });
   }
 
   render() {
     return (
-      <CustomPanel title={'Feel Last Week'}>
+      <CustomPanel title={'General Mood Last Week'}>
         <div id="mood-panel">
           <LineChart
             width={this.state.width}
             height={330}
-            data={data}
-            margin={{top: 5, right: 20, left: 10, bottom: 5}}
+            data={this.state.data}
+            margin={{top: 20, right: 20, left: 10, bottom: 5}}
           >
             <XAxis dataKey="name"/>
             <Tooltip/>

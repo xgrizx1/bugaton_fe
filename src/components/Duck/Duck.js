@@ -94,7 +94,6 @@ class Duck extends React.Component {
   }
 
   handleNoiseChange(child) {
-    console.log(moment(Math.round(child.key)));
     this.setState({
       noiseEvents: [
         ...this.prepareEventsForRender(this.state.noiseEvents),

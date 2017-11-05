@@ -1,6 +1,7 @@
 import React from 'react';
 import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
 import CustomPanel from '../Common/Panel';
+import {getRequest} from "request";
 
 const data = [
   {name: 'Day 1', noise: 40, temperature: 22},
@@ -16,16 +17,44 @@ class OverallFeel extends React.Component {
   constructor() {
     super();
     this.state = {
-      data,
       counter: 7,
       width: 600
     };
     this.onIntervalSetting = this.onIntervalSetting.bind(this);
   }
 
+  componentWillMount() {
+    getRequest('getAverageEventsWeekly')
+      .then(response => {
+          const resp = response.data;
+          let arr = new Array(resp.noise_events.length);
+          for (let i=0; i<arr.length; i++) {
+            arr[i] = {
+              name: `Day ${i+1}`
+            };
+          };
+
+          Object.keys(resp).forEach(
+            i => {
+              let next = resp[i];
+              for (let j = 0; j < next.length; j++) {
+                arr[j][i] = next[j];
+              }
+            });
+          if (arr.length > 5) {
+            arr = arr.slice(0, 5);
+          }
+          this.setState({data: arr});
+        }
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.onIntervalSetting);
-    this.setState({width: document.getElementById('live-feed').clientWidth});
+    this.onIntervalSetting();
   }
 
   componentWillUnmount() {
@@ -34,21 +63,6 @@ class OverallFeel extends React.Component {
 
   onIntervalSetting() {
     this.setState({width: document.getElementById('live-feed').clientWidth});
-    setInterval(() => {
-      let dataSlice = [];
-      if (this.state.data.length > 12) {
-        dataSlice = this.state.data.slice(6, 12);
-      } else {
-        dataSlice = this.state.data.slice();
-      }
-      this.setState({
-        data: [
-          ...dataSlice,
-          {name: `Day ${this.state.counter + 1}`, noise: Math.random() * 40, temperature: Math.random() * 3 + 22},
-        ],
-        counter: this.state.counter + 1,
-      });
-    }, 2000);
   }
 
   render() {
@@ -64,8 +78,8 @@ class OverallFeel extends React.Component {
             <XAxis dataKey="name"/>
             <Tooltip/>
             <CartesianGrid stroke="#e5e5e5"/>
-            <Line type="monotone" dataKey="noise" stroke="#193852" yAxisId={0}/>
-            <Line type="monotone" dataKey="temperature" stroke="#452123" yAxisId={0}/>
+            <Line type="monotone" dataKey="noise_events" stroke="#193852" yAxisId={0}/>
+            <Line type="monotone" dataKey="temperature_events" stroke="#452123" yAxisId={0}/>
           </LineChart>
         </div>
       </CustomPanel>

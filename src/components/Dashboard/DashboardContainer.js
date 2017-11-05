@@ -6,6 +6,7 @@ import LiveFeed from 'components/Dashboard/LiveFeed';
 import Flag from 'components/Common/Flag';
 import {browserHistory} from 'react-router';
 import './dashboard.scss';
+import GitBoard from "components/Dashboard/GitBoard";
 
 const ProjectItem = ({project}) =>
   <div onClick={() => browserHistory.push(`/projects/${project.id}`)} className="project-item-container">
@@ -91,8 +92,11 @@ class DashboardContainer extends React.Component {
         </div>
         <Section sectionName={'Ducks'}/>
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-xs-6">
             <LiveFeed/>
+          </div>
+          <div className="col-xs-6">
+            <GitBoard/>
           </div>
         </div>
         <Section sectionName={'Projects'}/>

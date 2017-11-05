@@ -44,7 +44,7 @@ class DashboardContainer extends React.Component {
     const gitEvent = firebase
       .database()
       .ref(`git_events`)
-      .orderByKey();
+      .orderByKey().limitToFirst(1);
     gitEvent.on('child_added', child => {
       const value = child.val();
       let arr = [];

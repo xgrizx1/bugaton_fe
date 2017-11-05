@@ -1,7 +1,6 @@
 import React from 'react';
 import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
 import CustomPanel from '../Common/Panel';
-import {getRequest} from "request";
 
 
 class GitBoard extends React.Component {
@@ -32,7 +31,7 @@ class GitBoard extends React.Component {
 
   render() {
     return (
-      <CustomPanel title={'Git'}>
+      <CustomPanel title={'Git - Code Quality per Commit'}>
         <div id="git-feed">
           <LineChart
             width={this.state.width}
@@ -43,9 +42,7 @@ class GitBoard extends React.Component {
             <XAxis dataKey="name"/>
             <Tooltip/>
             <CartesianGrid stroke="#e5e5e5"/>
-            <Line type="monotone" dataKey="files_added" stroke="green" yAxisId={0}/>
-            <Line type="monotone" dataKey="files_changed" stroke="#022a23" yAxisId={0}/>
-            <Line type="monotone" dataKey="files_removed" stroke="red" yAxisId={0}/>
+              <Line type="monotone" dataKey="code_quality" stroke="green" yAxisId={0}/>
           </LineChart>
         </div>
       </CustomPanel>

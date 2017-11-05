@@ -7,6 +7,7 @@ import Flag from 'components/Common/Flag';
 import {browserHistory} from 'react-router';
 import './dashboard.scss';
 import GitBoard from 'components/Dashboard/GitBoard';
+import GitStats from 'components/Dashboard/GitStats';
 import firebase from '../../config/database';
 import {getRequest} from 'request';
 
@@ -134,10 +135,15 @@ class DashboardContainer extends React.Component {
         </div>
         <Section sectionName={'Ducks'}/>
         <div className="row">
-          <div className="col-xs-6">
+          <div className="col-xs-12">
             <LiveFeed/>
           </div>
-          <div className="col-xs-6">
+          <div className="col-sm-6">
+            <GitStats
+              data={this.state.gitStates}
+            />
+          </div>
+          <div className="col-sm-6">
             <GitBoard
               data={this.state.gitStates}
             />

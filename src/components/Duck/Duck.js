@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from '../../config/database';
 import LiveFeedPanel from './LiveFeedPanel';
-import {transformTimeSeconds} from '../../commonFunctions/commonFunctions';
+import { transformTimeSeconds } from '../../commonFunctions/commonFunctions';
 import moment from 'moment';
 
 class Duck extends React.Component {
@@ -23,7 +23,6 @@ class Duck extends React.Component {
     this.prepareEventsForRender = this.prepareEventsForRender.bind(this);
   }
 
-
   componentWillMount() {
     const duckName = `duck${this.props.params.id}`;
     const noise = firebase
@@ -31,8 +30,7 @@ class Duck extends React.Component {
       .ref(`duck_events/noise_events/${duckName}`)
       .orderByKey();
     noise.on('child_added', child => {
-      if (transformTimeSeconds(child.key) < 50)
-        this.handleNoiseChange(child);
+      if (transformTimeSeconds(child.key) < 50) this.handleNoiseChange(child);
     });
 
     const temperature = firebase
@@ -40,8 +38,7 @@ class Duck extends React.Component {
       .ref(`duck_events/temperature_events/${duckName}`)
       .orderByKey();
     temperature.on('child_added', child => {
-      if (transformTimeSeconds(child.key) < 50)
-        this.handleTemperatureChange(child);
+      if (transformTimeSeconds(child.key) < 50) this.handleTemperatureChange(child);
     });
 
     const motion = firebase
@@ -49,8 +46,7 @@ class Duck extends React.Component {
       .ref(`duck_events/motion_events/${duckName}`)
       .orderByKey();
     motion.on('child_added', child => {
-      if (transformTimeSeconds(child.key) < 50)
-        this.handleMotionChange(child);
+      if (transformTimeSeconds(child.key) < 50) this.handleMotionChange(child);
     });
 
     const light = firebase
@@ -58,8 +54,7 @@ class Duck extends React.Component {
       .ref(`duck_events/light_events/${duckName}`)
       .orderByKey();
     light.on('child_added', child => {
-      if (transformTimeSeconds(child.key) < 50)
-        this.handleLightChange(child);
+      if (transformTimeSeconds(child.key) < 50) this.handleLightChange(child);
     });
 
     const humidity = firebase
@@ -67,8 +62,7 @@ class Duck extends React.Component {
       .ref(`duck_events/humidity_events/${duckName}`)
       .orderByKey();
     humidity.on('child_added', child => {
-      if (transformTimeSeconds(child.key) < 50)
-        this.handleHumidityChange(child);
+      if (transformTimeSeconds(child.key) < 50) this.handleHumidityChange(child);
     });
 
     this.setState({
@@ -76,7 +70,7 @@ class Duck extends React.Component {
       light,
       temperature,
       humidity,
-      motion
+      motion,
     });
   }
 
@@ -90,7 +84,7 @@ class Duck extends React.Component {
 
   prepareEventsForRender(events) {
     const arr = [...events];
-    return arr.length > 20 ? arr.slice(10, (events.length - 1)) : arr;
+    return arr.length > 20 ? arr.slice(10, events.length - 1) : arr;
   }
 
   handleNoiseChange(child) {
@@ -139,7 +133,6 @@ class Duck extends React.Component {
         },
       ],
     });
-
   }
 
   handleHumidityChange(child) {
@@ -160,19 +153,19 @@ class Duck extends React.Component {
       <div className="duck-container">
         <div className="row">
           <div className="col-lg-6">
-            <LiveFeedPanel data={this.state.noiseEvents} dataKey={'noise'}/>
+            <LiveFeedPanel data={this.state.noiseEvents} dataKey={'noise'} />
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel data={this.state.temperatureEvents} dataKey={'temperature'}/>
+            <LiveFeedPanel data={this.state.temperatureEvents} dataKey={'temperature'} />
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel data={this.state.humidityEvents} dataKey={'humidity'}/>
+            <LiveFeedPanel data={this.state.humidityEvents} dataKey={'humidity'} />
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel data={this.state.motionEvents} dataKey={'motion'}/>
+            <LiveFeedPanel data={this.state.motionEvents} dataKey={'motion'} />
           </div>
           <div className="col-lg-6">
-            <LiveFeedPanel data={this.state.lightEvents} dataKey={'light'}/>
+            <LiveFeedPanel data={this.state.lightEvents} dataKey={'light'} />
           </div>
         </div>
       </div>

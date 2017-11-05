@@ -1,5 +1,5 @@
 import React from 'react';
-import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
 import CustomPanel from '../Common/Panel';
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,7 @@ class LiveFeedPanel extends React.Component {
     super();
     this.state = {
       counter: 7,
-      width: 600
+      width: 600,
     };
     this.onResize = this.onResize.bind(this);
   }
@@ -17,7 +17,7 @@ class LiveFeedPanel extends React.Component {
     window.addEventListener('resize', this.onResize);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.onResize();
   }
 
@@ -31,7 +31,7 @@ class LiveFeedPanel extends React.Component {
     if (resizeable !== null) {
       toResize = resizeable.clientWidth;
     }
-    this.setState({width: toResize});
+    this.setState({ width: toResize });
   }
 
   render() {
@@ -42,21 +42,21 @@ class LiveFeedPanel extends React.Component {
             width={this.state.width}
             height={330}
             data={this.props.data}
-            margin={{top: 5, right: 20, left: 10, bottom: 5}}
+            margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
           >
-            <XAxis dataKey="name"/>
-            <Tooltip/>
-            <CartesianGrid stroke="#e5e5e5"/>
-            <Line type="monotone" dataKey={this.props.dataKey} stroke="#193852" yAxisId={0}/>
+            <XAxis dataKey="name" />
+            <Tooltip />
+            <CartesianGrid stroke="#e5e5e5" />
+            <Line type="monotone" dataKey={this.props.dataKey} stroke="#193852" yAxisId={0} />
           </LineChart>
         </div>
       </CustomPanel>
     );
   }
-};
+}
 
 LiveFeedPanel.propTypes = {
-  dataKey: PropTypes.string
+  dataKey: PropTypes.string,
 };
 
 export default LiveFeedPanel;

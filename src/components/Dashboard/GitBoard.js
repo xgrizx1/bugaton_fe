@@ -1,20 +1,18 @@
 import React from 'react';
-import {CartesianGrid, Line, LineChart, Tooltip, XAxis} from 'recharts';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis } from 'recharts';
 import CustomPanel from '../Common/Panel';
-
 
 class GitBoard extends React.Component {
   constructor() {
     super();
     this.state = {
       counter: 7,
-      width: 600
+      width: 600,
     };
     this.onIntervalSetting = this.onIntervalSetting.bind(this);
   }
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   componentDidMount() {
     window.addEventListener('resize', this.onIntervalSetting);
@@ -26,7 +24,7 @@ class GitBoard extends React.Component {
   }
 
   onIntervalSetting() {
-    this.setState({width: document.getElementById('git-feed').clientWidth});
+    this.setState({ width: document.getElementById('git-feed').clientWidth });
   }
 
   render() {
@@ -37,12 +35,12 @@ class GitBoard extends React.Component {
             width={this.state.width}
             height={330}
             data={this.props.data}
-            margin={{top: 5, right: 20, left: 10, bottom: 5}}
+            margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
           >
-            <XAxis dataKey="name"/>
-            <Tooltip/>
-            <CartesianGrid stroke="#e5e5e5"/>
-              <Line type="monotone" dataKey="code_quality" stroke="green" yAxisId={0}/>
+            <XAxis dataKey="name" />
+            <Tooltip />
+            <CartesianGrid stroke="#e5e5e5" />
+            <Line type="monotone" dataKey="code_quality" stroke="green" yAxisId={0} />
           </LineChart>
         </div>
       </CustomPanel>

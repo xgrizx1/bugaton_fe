@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import MoodFeed from 'components/Dashboard/MoodFeed';
 import LiveFeed from 'components/Dashboard/LiveFeed';
 import Flag from 'components/Common/Flag';
-import {browserHistory} from 'react-router';
+import { browserHistory } from 'react-router';
 import './dashboard.scss';
 import GitBoard from 'components/Dashboard/GitBoard';
 import GitStats from 'components/Dashboard/GitStats';
 import firebase from '../../config/database';
-import {getRequest} from 'request';
+import { getRequest } from 'request';
 
-const ProjectItem = ({project}) => (
+const ProjectItem = ({ project }) => (
   <div onClick={() => browserHistory.push(`/projects/${project.id}`)} className="project-item-container">
     <div className="project-item">
       <i className="material-icons">work</i>
@@ -20,10 +20,10 @@ const ProjectItem = ({project}) => (
   </div>
 );
 
-const Section = ({sectionName}) => (
+const Section = ({ sectionName }) => (
   <div className="dashboard-section">
     <div className="dashboard-section-name"> {sectionName}</div>
-    <div className="dashboard-section-line"/>
+    <div className="dashboard-section-line" />
   </div>
 );
 
@@ -36,7 +36,7 @@ class DashboardContainer extends React.Component {
     super();
     this.state = {
       projects: [],
-      gitStates: []
+      gitStates: [],
     };
   }
 
@@ -45,41 +45,31 @@ class DashboardContainer extends React.Component {
       .database()
       .ref(`git_events`)
       .orderByKey();
-    gitEvent.on('child_added', (child) => {
+    gitEvent.on('child_added', child => {
       const value = child.val();
       let arr = [];
-      Object.keys(value).forEach(
-        i => arr.push({name: child.key, ...value[i]})
-      );
+      Object.keys(value).forEach(i => arr.push({ name: child.key, ...value[i] }));
       this.setState({
-        gitStates: [
-          ...this.state.gitStates,
-          ...arr
-        ]
+        gitStates: [...this.state.gitStates, ...arr],
       });
     });
 
-    gitEvent.on('child_changed', (child) => {
+    gitEvent.on('child_changed', child => {
       const value = child.val();
       let arr = [];
-      Object.keys(value).forEach(
-        i => arr.push({name: child.key, ...value[i]})
-      );
+      Object.keys(value).forEach(i => arr.push({ name: child.key, ...value[i] }));
       this.setState({
-        gitStates: [
-          ...this.state.gitStates,
-          ...arr
-        ]
+        gitStates: [...this.state.gitStates, ...arr],
       });
     });
 
-    this.setState({gitEvent});
+    this.setState({ gitEvent });
 
     getRequest('getProjects/').then(response => {
       const resp = response.data;
       let arr = [];
-      Object.keys(resp).forEach(i => arr.push({...resp[i], id: i}));
-      this.setState({projects: arr});
+      Object.keys(resp).forEach(i => arr.push({ ...resp[i], id: i }));
+      this.setState({ projects: arr });
     });
   }
 
@@ -90,7 +80,7 @@ class DashboardContainer extends React.Component {
   render() {
     return (
       <div className="dashboard-container">
-        <Section sectionName={'Overall'}/>
+        <Section sectionName={'Overall'} />
         <div className="row">
           <div className="col-md-4">
             <CustomPanel title={'Flags'}>
@@ -143,28 +133,24 @@ class DashboardContainer extends React.Component {
             </CustomPanel>
           </div>
           <div className="col-md-8">
-            <MoodFeed/>
+            <MoodFeed />
           </div>
         </div>
-        <Section sectionName={'Ducks'}/>
+        <Section sectionName={'Ducks'} />
         <div className="row">
           <div className="col-xs-12">
-            <LiveFeed/>
+            <LiveFeed />
           </div>
           <div className="col-sm-6">
-            <GitStats
-              data={this.state.gitStates}
-            />
+            <GitStats data={this.state.gitStates} />
           </div>
           <div className="col-sm-6">
-            <GitBoard
-              data={this.state.gitStates}
-            />
+            <GitBoard data={this.state.gitStates} />
           </div>
         </div>
-        <Section sectionName={'Projects'}/>
+        <Section sectionName={'Projects'} />
         <div className="project-item-container">
-          {this.state.projects.map(item => <ProjectItem project={item} key={item.id}/>)}
+          {this.state.projects.map(item => <ProjectItem project={item} key={item.id} />)}
         </div>
       </div>
     );

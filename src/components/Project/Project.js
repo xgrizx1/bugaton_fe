@@ -2,9 +2,10 @@ import React from 'react';
 import Employee from 'components/Employee/Employee';
 import {Section} from 'components/Employee/Employee';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
-import './project.scss';
 import {getRequest} from 'request';
 import {browserHistory} from 'react-router';
+import './project.scss';
+import firebase from '../../config/database';
 
 const commits = [
   {author: 'Shawn Laurence', changed: 2, added: 2, deleted: 1, date: '22/09/2017 12:34pm'},
@@ -21,6 +22,7 @@ class Project extends React.Component {
       project: {
         users: []
       },
+      gitStates: []
     };
 
     this.prepareEmployees = this.prepareEmployees.bind(this);
@@ -34,6 +36,28 @@ class Project extends React.Component {
       }
       this.setState({project: resp[this.props.params.id]});
     });
+
+    const gitEvent = firebase
+      .database()
+      .ref(`git_events`)
+      .orderByKey().limitToLast(10);
+    gitEvent.on('child_added', child => {
+      const value = child.val();
+      let arr = [];
+      Object.keys(value).forEach(
+        i => arr.push({name: child.key, ...value[i]})
+      );
+      this.setState({
+        gitStates: [
+          ...arr,
+          ...this.state.gitStates,
+        ]
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.state.gitEvent.off();
   }
 
   prepareEmployees() {
@@ -50,30 +74,31 @@ class Project extends React.Component {
   }
 
   render() {
+    console.log(this.state.gitStates);
     const empl = this.prepareEmployees();
     return (
       <div>
         <Employee employees={empl}/>
         <div className="statistics">
           <Section sectionName={'Git'}/>
-          <Table>
+          <Table height={'400px'}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false} enableSelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Author</TableHeaderColumn>
                 <TableHeaderColumn>Changed</TableHeaderColumn>
                 <TableHeaderColumn>Added</TableHeaderColumn>
                 <TableHeaderColumn>Deleted</TableHeaderColumn>
-                <TableHeaderColumn>Date</TableHeaderColumn>
+                <TableHeaderColumn>Quality</TableHeaderColumn>
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} deselectOnClickaway={false} stripedRows>
-              {commits.map(commit => (
+              {this.state.gitStates.map(commit => (
                 <TableRow>
-                  <TableRowColumn>{commit.author}</TableRowColumn>
-                  <TableRowColumn>{commit.changed}</TableRowColumn>
-                  <TableRowColumn>{commit.added}</TableRowColumn>
-                  <TableRowColumn>{commit.deleted}</TableRowColumn>
-                  <TableRowColumn>{commit.date}</TableRowColumn>
+                  <TableRowColumn>{commit.name}</TableRowColumn>
+                  <TableRowColumn>{commit.files_changed}</TableRowColumn>
+                  <TableRowColumn>{commit.files_added}</TableRowColumn>
+                  <TableRowColumn>{commit.files_removed}</TableRowColumn>
+                  <TableRowColumn>{commit.code_quality.toPrecision(2)}</TableRowColumn>
                 </TableRow>
               ))}
             </TableBody>

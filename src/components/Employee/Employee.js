@@ -3,6 +3,7 @@ import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Happy from 'material-ui/svg-icons/social/mood';
 import Sad from 'material-ui/svg-icons/social/mood-bad';
+import PropTypes from 'prop-types';
 import './_employee.scss';
 import '../Dashboard/dashboard.scss';
 
@@ -11,7 +12,7 @@ const Mood = {
   sad: 'sad'
 };
 
-const Section = ({sectionName}) => (
+export const Section = ({sectionName}) => (
   <div className="dashboard-section">
     <div className="dashboard-section-name"> {sectionName}</div>
     <div className="dashboard-section-line"/>
@@ -39,7 +40,7 @@ class Employee extends React.Component {
   }
 
   renderEmployees() {
-    return employees.map(
+    return this.props.employees.map(
       item =>
         <ListItem
           className="col-lg-4 col-md-6 col-xs-6"
@@ -68,10 +69,17 @@ class Employee extends React.Component {
             <div>Sad</div>
           </div>
         </div>
-        <Section sectionName="Graphs"/>
       </div>
     );
   }
+};
+
+Employee.defaultProps = {
+  employees
+};
+
+Employee.PropTypes = {
+  employees: PropTypes.array
 };
 
 export default Employee;

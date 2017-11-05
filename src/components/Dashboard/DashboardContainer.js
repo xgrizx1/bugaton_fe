@@ -46,7 +46,6 @@ class DashboardContainer extends React.Component {
       .ref(`git_events`)
       .orderByKey();
     gitEvent.on('child_added', child => {
-      debugger;
       const value = child.val();
       let arr = [];
       Object.keys(value).forEach(i => arr.push({name: child.key, ...value[i]}));

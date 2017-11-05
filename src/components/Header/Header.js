@@ -12,11 +12,11 @@ class Header extends React.PureComponent {
               menu
             </i>
             <div className="header-title">Dev-Duck</div>
-            <div> –</div>
+            <div> – </div>
             <div className="header-page">Dashboard</div>
           </div>
           <div className="duck-container">
-            <span color={'white'}>DevDuck</span>
+            <span color={'white'} style={{paddingRight: '10px'}}>DevDuck</span>
             <img width={40} src="../../images/ducky.png"/>
           </div>
         </div>

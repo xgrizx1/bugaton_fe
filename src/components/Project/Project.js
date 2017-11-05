@@ -71,7 +71,6 @@ class Project extends React.Component {
   }
 
   render() {
-    console.log(this.state.gitStates);
     const empl = this.prepareEmployees();
     return (
       <div>

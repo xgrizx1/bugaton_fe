@@ -59,7 +59,7 @@ class DashboardContainer extends React.Component {
       const value = child.val();
       let arr = [];
       Object.keys(value).forEach(i => arr.push({name: child.key, ...value[i]}));
-      arr = arr[arr.length - 1];
+      arr = [arr[arr.length - 1]];
       this.setState({
         gitStates: [...this.state.gitStates, ...arr],
       });

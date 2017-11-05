@@ -30,3 +30,40 @@
   text-transform: uppercase;
   color: #76808c;
 }
+
+.project-item-container {
+  display: flex;
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  flex-direction: row;
+}
+
+.project-item {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    font-size: 70px;
+    padding-bottom: 30px;
+    color: grey;
+  }
+
+  div {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.project-item:hover {
+  width: 201px;
+  height: 201px;
+  cursor: pointer;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 6px rgba(0, 0, 0, 0.24);
+}

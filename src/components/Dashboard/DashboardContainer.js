@@ -4,7 +4,18 @@ import PropTypes from 'prop-types';
 import MoodFeed from 'components/Dashboard/MoodFeed';
 import LiveFeed from 'components/Dashboard/LiveFeed';
 import Flag from 'components/Common/Flag';
+import Work from 'material-ui/svg-icons/action/work';
+import {browserHistory} from 'react-router';
 import './dashboard.scss';
+
+const ProjectItem = ({project}) =>
+  <div onClick={() => browserHistory.push(`/projects/${project.id}`)} className="project-item-container">
+    <div className="project-item">
+      <i className="material-icons">work</i>
+      <div>{project.name}</div>
+    </div>
+  </div>;
+
 
 const Section = ({sectionName}) => (
   <div className="dashboard-section">
@@ -16,6 +27,12 @@ const Section = ({sectionName}) => (
 Section.propTypes = {
   sectionName: PropTypes.string.isRequired,
 };
+
+const projects = [
+  {id: 0, name: 'First Project'},
+  {id: 1, name: 'Second Project'},
+  {id: 2, name: 'Third Project'},
+];
 
 class DashboardContainer extends React.Component {
   render() {
@@ -79,7 +96,13 @@ class DashboardContainer extends React.Component {
             <LiveFeed/>
           </div>
         </div>
-        <Section sectionName={'Profile'}/>
+        <Section sectionName={'Projects'}/>
+        <div className="project-item-container">
+          {projects.map(
+            (item) => <ProjectItem project={item} key={item.id}/>
+          )
+          }
+        </div>
       </div>
     );
   }

@@ -7,8 +7,10 @@ import PaymentContainer from 'components/Payment/PaymentContainer';
 import DashboardContainer from 'components/Dashboard/DashboardContainer';
 import DashboardEntry from 'components/Dashboard/DashboardEntry';
 import Duck from 'components/Duck/Duck';
-import Employee from "components/Employee/Employee";
+import Employee from 'components/Employee/Employee';
 import Error from 'components/ErrorPage/Error';
+import RateDay from 'components/Employee/RateDay';
+import Project from 'components/Project/Project';
 import configureStore from './stores';
 import App from './components/App';
 
@@ -30,6 +32,8 @@ ReactDOM.render(
             <Route path="/dashboard" component={DashboardContainer}/>
             <Route path="/duck/:id" component={Duck}/>
             <Route path="/employees" component={Employee} />
+            <Route path="/rate-day/:id" component={RateDay} />
+            <Route path="/projects/:id" component={Project} />
           </Route>
           <Route path="*" component={Error} />
         </Route>

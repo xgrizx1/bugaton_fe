@@ -4,6 +4,7 @@ import {Section} from 'components/Employee/Employee';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {getRequest} from 'request';
 import {browserHistory} from 'react-router';
+import PropTypes from 'prop-types';
 import './project.scss';
 import firebase from '../../config/database';
 
@@ -41,7 +42,7 @@ class Project extends React.Component {
       .database()
       .ref(`git_events`)
       .orderByKey().limitToLast(10);
-    gitEvent.on('child_added', child => {
+    gitEvent.on('child_added', (child) => {
       const value = child.val();
       let arr = [];
       Object.keys(value).forEach(
@@ -108,5 +109,11 @@ class Project extends React.Component {
     );
   }
 }
+
+Project.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.any
+  })
+};
 
 export default Project;

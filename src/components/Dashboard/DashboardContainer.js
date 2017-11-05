@@ -47,7 +47,6 @@ class DashboardContainer extends React.Component {
       .orderByKey();
     gitEvent.on('child_added', (child) => {
       const value = child.val();
-      console.log(value);
       let arr = [];
       Object.keys(value).forEach(
         i => arr.push({name: child.key, ...value[i]})
@@ -62,7 +61,6 @@ class DashboardContainer extends React.Component {
 
     gitEvent.on('child_changed', (child) => {
       const value = child.val();
-      console.log(value);
       let arr = [];
       Object.keys(value).forEach(
         i => arr.push({name: child.key, ...value[i]})

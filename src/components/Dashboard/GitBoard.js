@@ -37,13 +37,15 @@ class GitBoard extends React.Component {
           <LineChart
             width={this.state.width}
             height={330}
-            data={this.state.data}
+            data={this.props.data}
             margin={{top: 5, right: 20, left: 10, bottom: 5}}
           >
             <XAxis dataKey="name"/>
             <Tooltip/>
             <CartesianGrid stroke="#e5e5e5"/>
-            <Line type="monotone" dataKey="git" stroke="#452123" yAxisId={0}/>
+            <Line type="monotone" dataKey="files_added" stroke="green" yAxisId={0}/>
+            <Line type="monotone" dataKey="files_changed" stroke="#022a23" yAxisId={0}/>
+            <Line type="monotone" dataKey="files_removed" stroke="red" yAxisId={0}/>
           </LineChart>
         </div>
       </CustomPanel>

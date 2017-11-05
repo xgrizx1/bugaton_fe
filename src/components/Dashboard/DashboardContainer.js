@@ -47,10 +47,16 @@ class DashboardContainer extends React.Component {
     gitEvent.on('child_added', child => {
       const value = child.val();
       console.log(value);
-      this.setState([
-        ...this.state.gitStates,
-        {name: child.key, ...value}
-      ]);
+      let arr = [];
+      Object.keys(value).forEach(
+        i => arr.push({name: child.key, ...value[i]})
+      );
+      this.setState({
+        gitStates: [
+          ...this.state.gitStates,
+          ...arr
+        ]
+      });
     });
 
     this.setState({gitEvent});
@@ -68,7 +74,6 @@ class DashboardContainer extends React.Component {
   }
 
   render() {
-    console.log(this.state.gitStates);
     return (
       <div className="dashboard-container">
         <Section sectionName={'Overall'}/>
@@ -133,7 +138,9 @@ class DashboardContainer extends React.Component {
             <LiveFeed/>
           </div>
           <div className="col-xs-6">
-            <GitBoard/>
+            <GitBoard
+              data={this.state.gitStates}
+            />
           </div>
         </div>
         <Section sectionName={'Projects'}/>

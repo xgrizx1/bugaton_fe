@@ -45,7 +45,7 @@ class DashboardContainer extends React.Component {
       .database()
       .ref(`git_events`)
       .orderByKey();
-    gitEvent.on('child_added', child => {
+    gitEvent.on('child_added', (child) => {
       const value = child.val();
       console.log(value);
       let arr = [];

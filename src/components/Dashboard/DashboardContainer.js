@@ -54,7 +54,7 @@ class DashboardContainer extends React.Component {
       });
     });
 
-    gitEvent.limitToFirst(1).on('child_changed', child => {
+    gitEvent.limitToLast(1).on('child_changed', child => {
       const value = child.val();
       let arr = [];
       Object.keys(value).forEach(i => arr.push({ name: child.key, ...value[i] }));

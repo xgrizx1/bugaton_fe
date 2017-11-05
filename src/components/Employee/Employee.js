@@ -3,13 +3,13 @@ import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Happy from 'material-ui/svg-icons/social/mood';
 import Sad from 'material-ui/svg-icons/social/mood-bad';
-import PropTypes from 'prop-types';
+import {getRequest} from 'request';
 import './_employee.scss';
 import '../Dashboard/dashboard.scss';
 
 const Mood = {
   happy: 'happy',
-  sad: 'sad'
+  sad: 'sad',
 };
 
 export const Section = ({sectionName}) => (
@@ -19,36 +19,44 @@ export const Section = ({sectionName}) => (
   </div>
 );
 
-const imgPath = '../../images/img';
-
-const employees = [
-  {firstName: 'Aleksandar', lastName: 'Ogrizovic', imagePath: `${imgPath}1.png`, mood: Mood.happy},
-  {firstName: 'Nicholas', lastName: 'Leavestone', imagePath: `${imgPath}2.png`, mood: Mood.sad},
-  {firstName: 'Michael', lastName: 'Gunnicorn', imagePath: `${imgPath}5.png`, mood: Mood.happy},
-  {firstName: 'Jack', lastName: 'Unreaster', imagePath: `${imgPath}4.png`, mood: Mood.happy},
-  {firstName: 'Lawry', lastName: 'Modules', imagePath: `${imgPath}5.png`, mood: Mood.sad},
-  {firstName: 'Fury', lastName: 'Nawyer', imagePath: `${imgPath}1.png`, mood: Mood.happy},
-  {firstName: 'Cathy', lastName: 'Elder', imagePath: `${imgPath}3.png`, mood: Mood.sad},
-  {firstName: 'Miles', lastName: 'McDaniels', imagePath: `${imgPath}2.png`, mood: Mood.happy},
-  {firstName: 'Liley', lastName: 'DeVay', imagePath: `${imgPath}5.png`, mood: Mood.sad},
-];
-
 class Employee extends React.Component {
   constructor() {
     super();
+    this.state = {
+      users: [],
+    };
     this.renderEmployees = this.renderEmployees.bind(this);
   }
 
+  componentWillMount() {
+    getRequest('getUsers')
+      .then((response) => {
+        const resp = response.data;
+        let arr = [];
+        Object.keys(resp).forEach(function (key) {
+          arr.push({
+            name: resp[key].name,
+            mood: resp[key].predicted_feel > 2 ? 'happy' : 'bad',
+            imagePath: resp[key].img
+          });
+        });
+        this.setState({users: arr});
+      })
+      .catch(e => {
+        throw e;
+      });
+  }
+
   renderEmployees() {
-    return this.props.employees.map(
-      item =>
-        <ListItem
-          className="col-lg-4 col-md-6 col-xs-6"
-          primaryText={`${item.firstName} ${item.lastName}`}
-          leftAvatar={<Avatar src={item.imagePath}/>}
-          rightIcon={item.mood === Mood.happy ? <Happy color={'green'}/> : <Sad color={'red'}/>}
-        />
-    );
+    return this.state.users.map(item => (
+      <ListItem
+        key={item.name}
+        className="col-lg-4 col-md-6 col-xs-6"
+        primaryText={`${item.name}`}
+        leftAvatar={<Avatar src={item.imagePath}/>}
+        rightIcon={item.mood === Mood.happy ? <Happy color={'green'}/> : <Sad color={'red'}/>}
+      />
+    ));
   }
 
   render() {
@@ -56,12 +64,12 @@ class Employee extends React.Component {
       <div className="people-container">
         <Section sectionName="Employees"/>
         <div className="row">
-          <List>
-            {this.renderEmployees()}
-          </List>
+          <List>{this.renderEmployees()}</List>
         </div>
         <div className="people-legend-container">
-          <div className="people-legend-header"><strong>Predicted Mood</strong></div>
+          <div className="people-legend-header">
+            <strong>Predicted Mood</strong>
+          </div>
           <div className="people-legend">
             <Happy color="green"/>
             <div style={{paddingRight: '10px'}}>Happy</div>
@@ -72,14 +80,6 @@ class Employee extends React.Component {
       </div>
     );
   }
-};
-
-Employee.defaultProps = {
-  employees
-};
-
-Employee.PropTypes = {
-  employees: PropTypes.array
-};
+}
 
 export default Employee;

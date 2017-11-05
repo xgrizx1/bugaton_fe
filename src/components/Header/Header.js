@@ -16,8 +16,10 @@ class Header extends React.PureComponent {
             <div className="header-page">Dashboard</div>
           </div>
           <div className="duck-container">
-            <span color={'white'} style={{paddingRight: '10px'}}>DevDuck</span>
-            <img width={40} src="../../images/ducky.png"/>
+            <span color={'white'} style={{ paddingRight: '10px' }}>
+              DevDuck
+            </span>
+            <img width={40} src="../../images/ducky.png" />
           </div>
         </div>
       </div>

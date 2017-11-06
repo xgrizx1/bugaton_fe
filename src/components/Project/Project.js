@@ -77,7 +77,7 @@ class Project extends React.Component {
         <Employee employees={empl} />
         <div className="statistics">
           <Section sectionName={'Git'} />
-          <Table height={'400px'}>
+          <Table height={'400px'}> 
             <TableHeader adjustForCheckbox={false} displaySelectAll={false} enableSelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Author</TableHeaderColumn>
